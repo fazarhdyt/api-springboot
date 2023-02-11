@@ -1,0 +1,38 @@
+package com.domain;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.domain.utils.AuditorAwareImpl;
+
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+@EnableWebMvc
+@SpringBootApplication
+public class DemoApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApiApplication.class, args);
+	}
+
+	@Bean
+	public ModelMapper modelMapper(){
+		return new ModelMapper();
+	}
+
+	@Bean
+	public InternalResourceViewResolver defauViewResolver(){
+		return new InternalResourceViewResolver();
+	}
+
+	@Bean
+	public AuditorAware<String> auditorAware(){
+		return new AuditorAwareImpl();
+	}
+
+}
